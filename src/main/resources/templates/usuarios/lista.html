@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.w3.org/1999/xhtml" 
+    layout:decorate="~{layout}">
+<body>
+    <div class="container" layout:fragment="corpo">
+        <h2>Lista de Usuários</h2>
+        
+        <div class="col-md-12">
+            <table class="table table-striped" th:if="${!usuarios.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Perfil</th>
+                        <th scope="col">Cidade</th>
+                        <th scope="col">UF</th>
+                        <th scope="col">Data de cadastro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.nome}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.ativo} ? 'Ativo' : 'Inativo'"></td>
+                        <td>
+                            <th:block th:each="pp : ${usuario.perfis}">
+                                <span th:text="${pp.perfil} == 'USER' ? 'Usuário' : 'Administrador'"></span>
+                            </th:block>
+                        </td>
+                        <td th:text="${usuario.localidade.cidade}"></td>
+                        <td th:text="${usuario.localidade.estado}"></td>
+                        <td th:text="${#temporals.format(usuario.dataCadastro, 'dd/MM/yyyy')}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:replace="~{fragments/paginacao}"></div>
+            <span th:if="${usuarios.isEmpty()}">
+                <h5>Nenhum registro</h5>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

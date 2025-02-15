@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.w3.org/1999/xhtml" 
+    layout:decorate="~{layout}">
+<body>
+    <div class="container" layout:fragment="corpo">
+        <h2>Lista de Tarefas</h2>
+        
+        <div class="col-md-12">
+            <table class="table table-striped" th:if="${!tarefas.isEmpty()}">
+                <thead>
+                    <tr>
+                        <th scope="col">Tarefa</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Data do cadastro</th>
+                        <th scope="col">Data de expiração</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tarefa : ${tarefas}">
+                        <td th:text="${tarefa.titulo}"></td>
+                        <td th:text="${tarefa.categoria.getDescricao}"></td>
+                        <td th:text="${tarefa.usuario.nome}"></td>
+                        <td th:text="${#temporals.format(tarefa.dataCriacao, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#dates.format(tarefa.dataExpiracao, 'dd/MM/yyyy')}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div th:replace="~{fragments/paginacao}"></div>
+            <span th:if="${tarefas.isEmpty()}">
+                <h5>Nenhum registro</h5>
+            </span>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+
+<body>
+    <div class="container" layout:fragment="corpo">
+        <h2>Cadastro de tarefas</h2>
+
+        <form th:object="${tarefa}" method="POST">
+            <div th:replace="~{fragments/alerta}"></div>
+
+            <div class="row">
+                <div class="form-group col-md-8">
+                    <label>Título</label>
+                    <input type="text" class="form-control" placeholder="Título" th:field="*{titulo}" autofocus
+                        th:classappend="${#fields.hasErrors('titulo')} ? 'is-invalid'" />
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{titulo}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label>Categoria</label>
+                    <select class="form-select" name="categoria" th:field="*{categoria}">
+                        <option value=""></option>
+                        <option th:each="cat : ${T(com.tarefas.domain.models.enums.Categoria).values()}"
+                            th:value="${cat}" th:text="${cat.descricao}"></option>
+                    </select>
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{categoria}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label>Descrição</label>
+                    <input type="text" class="form-control" placeholder="Descrição" th:field="*{descricao}" 
+                        th:classappend="${#fields.hasErrors('descricao')} ? 'is-invalid'" />
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{descricao}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Data de Expiração</label>
+                    <input type="date" class="form-control" th:field="*{dataExpiracao}" 
+                        th:classappend="${#fields.hasErrors('dataExpiracao')} ? 'is-invalid'" />
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{dataExpiracao}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-outline-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

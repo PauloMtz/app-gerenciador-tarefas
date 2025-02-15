@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+
+<body>
+    <div class="container" layout:fragment="corpo">
+        <h2>Minhas tarefas</h2>
+
+        <div class="alinhamento-direito">
+			<a class="btn btn-success" th:href="@{/tarefa/cadastrar}">Adicionar Tarefa</a>
+		</div>
+		<div th:each="tarefa: ${tarefas}" style="margin: 10px">
+			<div class="card bg-light mb-3 shadow border-light">
+				<div class="card-header" th:text="${tarefa.titulo}" style="font-weight: bold"></div>
+				<div class="card-body">
+					<!-- https://stackoverflow.com/questions/23156585/process-thymeleaf-variable-as-html-code-and-not-text -->
+					<p class="card-text" data-th-utext="${'<b>Informações adicionais:</b> ' + tarefa.descricao}"></p>
+                    <p class="card-text" th:text="${'Data de Cadastro: ' + #temporals.format(tarefa.dataCriacao, 'dd/MM/yyyy')}"></p>
+					<p class="card-text" th:text="${'Data de Expiração: ' + #dates.format(tarefa.dataExpiracao, 'dd/MM/yyyy')}"></p>
+					<p class="card-text" style="color: green" th:if="${!tarefa.concluida and tarefa.dataExpiracao.after(new java.util.Date())}">Situação: Em dia</p>
+					<p class="card-text" style="color: red" th:if="${!tarefa.concluida and tarefa.dataExpiracao.before(new java.util.Date())}">Situação: Atrasada</p>
+				</div>
+				<div class="card-footer bg-light">
+					<p th:if="${!tarefa.concluida}">
+						<a th:href="@{/tarefa/editar/{id}(id=${tarefa.id})}" style="margin-right:10px">Alterar</a> |
+						<!--<a th:href="@{/tarefa/excluir/{id}(id=${tarefa.id})}"
+                            th:data-confirm-delete="|Confirma exclusão de ${tarefa.titulo}?|"
+                            onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"
+                            style="margin-right:10px;margin-left:10px;">Excluir</a> |-->
+						<a th:if="${!tarefa.concluida}" th:href="@{/tarefa/concluir/{id}(id=${tarefa.id})}"
+                            th:data-confirm-conclusao="|Confirma conclusão da tarefa ${tarefa.titulo}?|"
+                            onclick="if (!confirm(this.getAttribute('data-confirm-conclusao'))) return false"
+                            style="margin-left: 10px;">Concluir</a>
+					</p>
+					<p th:if="${tarefa.concluida}" th:text="${'Data da conclusão: ' + #temporals.format(tarefa.dataConclusao, 'dd/MM/yyyy')}"></p>
+				</div>
+			</div>
+		</div>
+		<div th:replace="~{fragments/paginacao}"></div>
+    </div>
+</body>
+</html>

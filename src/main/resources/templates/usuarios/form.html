@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}">
+
+<body>
+    <div class="container" layout:fragment="corpo">
+        <h2>Cadastro de usuários</h2>
+
+        <form th:object="${usuario}" method="POST">
+            <div th:replace="~{fragments/alerta}"></div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" placeholder="Título" th:field="*{nome}" autofocus
+                        th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid'" />
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{nome}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>E-mail</label>
+                    <input type="text" class="form-control" placeholder="E-mail" th:field="*{email}"
+                        th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{email}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Senha</label>
+                    <input type="password" class="form-control" placeholder="Senha" th:field="*{password}" 
+                        th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" />
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{password}"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Localidade</label>
+                    <select class="form-control" th:field="*{localidade}"
+                        th:classappend="${#fields.hasErrors('localidade')} ? 'is-invalid'">
+                        <option value="">Selecione</option>
+                        <option th:each="local : ${localidades}" 
+                            th:value="${local.id}" th:text="${local.cidade}"></option>
+                    </select>
+
+                    <div class="invalid-feedback">
+                        <span th:errors="*{localidade}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-outline-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

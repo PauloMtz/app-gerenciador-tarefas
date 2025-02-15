@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Sistema de Controle</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/css/bootstrap-5.1.3.min.css}" rel="stylesheet" />
+  <link rel='stylesheet' type='text/css' media='screen' th:href='@{/css/style.css}'>
+  <!-- favicon -->
+  <link rel="icon" th:href="@{/img/favicon.png}" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/img/spring-boot.png}" />
+            GERENCIADOR DE TAREFAS
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <h2>Login</h2>
+
+        <form th:object="${usuario}" method="POST">
+          <div class="alert alert-danger" th:if="${loginErro != null}">
+            <span th:text="${loginErro}"></span>
+          </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>E-mail</label>
+                    <input type="text" class="form-control" placeholder="E-mail" name="username" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label>Senha</label>
+                    <input type="password" class="form-control" placeholder="Senha" name="password" id="senha" />
+                    <div style="margin-top:10px">
+                      <input class="form-check-input" type="checkbox" onclick="showPass()"> Mostrar Senha
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <input type="submit" name="enviar" value="Entrar"class="btn btn-outline-primary" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-12">
+                <span>Não tem cadastro? <a th:href="@{/usuario/cadastrar}"> Cadastre-se </a></span>
+              </div>
+            </div>
+        </form>
+      </div>
+
+      <div class="row-footer">
+        <p>Aplicação baseada no workshop da TreinaWeb - julho/2019<br>
+        &copy; Copyright - 2025</p>
+      </div>
+  
+      <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+      <script th:src="@{/js/bootstrap-5.1.3.min.js}"></script>
+
+      <script type="text/javascript">
+        function showPass() {
+          var campo = document.getElementById("senha");
+          if (campo.type === "password") {
+            campo.type = "text";
+          } else {
+            campo.type = "password";
+          }
+        } 
+      </script>
+</body>
+</html>
