@@ -19,7 +19,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/img/**", "/js/**", "/css/**").permitAll()
                 .requestMatchers("/", "/home/**").permitAll()
                 .requestMatchers("/usuario/login", "/usuario/cadastrar").permitAll()
-                .requestMatchers("/dashboard").permitAll()
+                .requestMatchers("/dashboard").hasAuthority("ADMIN")
                 .requestMatchers("/usuario/listar").hasAuthority("ADMIN")
                 .requestMatchers("/tarefa/**").hasAuthority("USER")
                 .anyRequest().authenticated())
