@@ -1,0 +1,35 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="graficoLinhas" style="max-width:1300px;max-height:300px;"></canvas>
+    <script th:inline="javascript">
+        var ctx = document.getElementById('graficoLinhas').getContext('2d');
+
+        var meses = /*[[${dadosGraficoLinhas.labels}]]*/[];
+        var contagens = /*[[${dadosGraficoLinhas.data}]]*/[];
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: meses,
+                datasets: [{
+                    label: 'Tarefas cadastradas Mês',
+                    data: contagens,
+                    borderColor: 'blue',
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...[1, 4]) + 1
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

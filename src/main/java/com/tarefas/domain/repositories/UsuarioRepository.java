@@ -11,6 +11,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Usuario findByEmail(String email);
 
-    @Query("SELECT u FROM Usuario u")
-    Page<Usuario> listaUsuarios(Pageable pageable);
+    // join fetch para resolver o problema N + 1
+    @Query("FROM Usuario u JOIN FETCH u.perfis JOIN FETCH u.localidade")
+    Page<Usuario> findAll(Pageable pageable);
+
+    @Query("SELECT count(*) FROM Usuario")
+    long countByUsuario();
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+  xmlns:layout="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{layout}">
+<body>
+  <div class="container" layout:fragment="corpo">
+    <h2>Dashboard</h2>
+    <div class="row">
+      <div class="col-md-4 shadow p-3 mb-5 bg-body rounded">
+        <div th:replace="~{graficos/concluidas-pizza}"></div>
+      </div>
+      <div class="col-md-4 shadow p-3 mb-5 bg-body rounded">
+        <div th:replace="~{graficos/categorias-barras}"></div>
+      </div>
+      <div class="col-2">
+        <div class="card shadow" style="min-height: 38vh;">
+          <div style="text-align: center;" class="card-header">Usuários cadastrados</div>
+          <div class="card-body">
+            <h3 style="text-align:center;margin-top:30px;" class="card-title">[[${usuarios}]]</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="card shadow" style="min-height: 38vh;">
+          <div style="text-align: center;" class="card-header">Total de tarefas cadastradas</div>
+          <div class="card-body">
+            <h3 style="text-align:center;margin-top:30px;" class="card-title">[[${tarefas}]]</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 shadow p-3 mb-5 bg-body rounded">
+        <div th:replace="~{graficos/tarefas-linhas}"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

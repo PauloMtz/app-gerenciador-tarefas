@@ -5,6 +5,10 @@
 <body>
     <div class="container" layout:fragment="corpo">
         <h2>Lista de Usuários</h2>
+        <div style="float:inline-end;margin-bottom:20px;margin-top:20px">
+            <a th:href="@{/usuario/relatorio/pdf/jr1(code='usuarios', acao='v')}" 
+                target="_blank" class="btn btn-outline-primary">Visualizar relatório PDF</a>
+        </div>
         
         <div class="col-md-12">
             <table class="table table-striped" th:if="${!usuarios.isEmpty()}">

@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <canvas id="pizzaChart" style="max-width:500px;max-height:260px;"></canvas>
+
+    <script>
+        var ctx = document.getElementById('pizzaChart').getContext('2d');
+        var pizzaChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Concluídas', 'Não Concluídas'],
+                datasets: [{
+                    data: [
+                        [[${ concluidas }]],
+                        [[${ naoConcluidas }]]
+                    ],
+                    backgroundColor: ['#0040FF', '#A9A9F5']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Tarefas concluídas vs não concluídas'
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
+                        anchor: 'center',
+                        align: 'center',
+                        formatter: (value) => value
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

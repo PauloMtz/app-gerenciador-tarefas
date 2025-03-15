@@ -27,6 +27,6 @@ public class UsuarioService {
     public Page<Usuario> listaUsuarios(int numPage) {
         int size = 5;
         Pageable pageable = PageRequest.of(numPage -1, size, Sort.by("nome"));
-        return usuarioRepository.listaUsuarios(pageable);
+        return usuarioRepository.findAll(pageable);
     }
 }

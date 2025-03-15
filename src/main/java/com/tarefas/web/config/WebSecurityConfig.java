@@ -17,10 +17,11 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests(authorizeRequestsCustomizer -> authorizeRequestsCustomizer
                 .requestMatchers("/img/**", "/js/**", "/css/**").permitAll()
+                .requestMatchers("/", "/home/**").permitAll()
                 .requestMatchers("/usuario/login", "/usuario/cadastrar").permitAll()
+                .requestMatchers("/dashboard").permitAll()
                 .requestMatchers("/usuario/listar").hasAuthority("ADMIN")
                 .requestMatchers("/tarefa/**").hasAuthority("USER")
-                .requestMatchers("/", "/home/**").permitAll()
                 .anyRequest().authenticated())
             .formLogin(formLoginCustomizer -> formLoginCustomizer
                 .loginPage("/usuario/login")

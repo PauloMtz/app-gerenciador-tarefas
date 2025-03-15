@@ -1,0 +1,26 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="graficoBarras" style="max-width:500px;max-height:260px;"></canvas>
+    <script th:inline="javascript">
+        var labels = /*[[${labels}]]*/[];
+        var valores = /*[[${valores}]]*/[];
+  
+        var ctx = document.getElementById('graficoBarras').getContext('2d');
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Tarefas por categoria',
+                    data: valores,
+                    backgroundColor: ['#819FF7'],
+                    hoverOffset: 4
+                }]
+            }
+        });
+    </script>
+</body>
+</html>

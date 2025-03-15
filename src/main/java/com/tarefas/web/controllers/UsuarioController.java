@@ -1,10 +1,12 @@
 package com.tarefas.web.controllers;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +15,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tarefas.domain.models.Perfil;
 import com.tarefas.domain.models.Usuario;
 import com.tarefas.domain.repositories.LocalidadeRepository;
 import com.tarefas.domain.repositories.PerfilRepository;
+import com.tarefas.domain.services.JasperService;
 import com.tarefas.domain.services.UsuarioService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -32,6 +37,7 @@ public class UsuarioController {
 	private final UsuarioService usuarioService;
     private final LocalidadeRepository localidadeRepository;
     private final PerfilRepository perfilRepository;
+    private final JasperService jasperService;
 
 	@GetMapping("/cadastrar")
     public String cadastrar(Model model) {
@@ -107,4 +113,23 @@ public class UsuarioController {
 	public String acessoNegado(Model model) {
 		return "usuarios/acesso-negado";
 	}
+
+    // exibe relatório sem parâmetros
+    @GetMapping("/relatorio/pdf/jr1")
+    public void exibirRelatorio1(@RequestParam("code") String code,
+        @RequestParam("acao") String acao, HttpServletResponse response) throws IOException {
+
+        byte[] bytes = jasperService.exportPDF(code);
+        response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+
+        // se acao for 'v' de visualizar no navegador...
+        if (acao.equals("v")) {
+            response.setHeader("Content-disposition", "inline; filename=relatorio-" + code + ".pdf");
+        } else {
+            // se não, baixa o relatório
+            response.setHeader("Content-disposition", "attachment; filename=relatorio-" + code + ".pdf");
+        }
+
+        response.getOutputStream().write(bytes);
+    }
 }
